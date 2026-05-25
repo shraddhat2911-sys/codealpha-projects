@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Gallery</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            text-align: center;
+            background: #f4f4f4;
+        }
+
+        h1 {
+            margin: 20px;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            width: 80%;
+            margin: auto;
+        }
+
+        .gallery img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .gallery img:hover {
+            transform: scale(1.05);
+        }
+
+        /* Lightbox */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .lightbox img {
+            width: 60%;
+            max-height: 80%;
+            border-radius: 10px;
+        }
+
+        .controls {
+            margin-top: 10px;
+        }
+
+        button {
+            padding: 10px;
+            margin: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>Image Gallery</h1>
+
+<div class="gallery">
+    <img src="https://picsum.photos/300/200?1" onclick="openImage(0)">
+    <img src="https://picsum.photos/300/200?2" onclick="openImage(1)">
+    <img src="https://picsum.photos/300/200?3" onclick="openImage(2)">
+    <img src="https://picsum.photos/300/200?4" onclick="openImage(3)">
+    <img src="https://picsum.photos/300/200?5" onclick="openImage(4)">
+    <img src="https://picsum.photos/300/200?6" onclick="openImage(5)">
+</div>
+
+<div class="lightbox" id="lightbox">
+    <img id="lightbox-img">
+    
+    <div class="controls">
+        <button onclick="prevImage()">Prev</button>
+        <button onclick="nextImage()">Next</button>
+        <button onclick="closeImage()">Close</button>
+    </div>
+</div>
+
+<script>
+    const images = [
+        "https://picsum.photos/600/400?1",
+        "https://picsum.photos/600/400?2",
+        "https://picsum.photos/600/400?3",
+        "https://picsum.photos/600/400?4",
+        "https://picsum.photos/600/400?5",
+        "https://picsum.photos/600/400?6"
+    ];
+
+    let currentIndex = 0;
+
+    function openImage(index) {
+        currentIndex = index;
+        document.getElementById("lightbox").style.display = "flex";
+        document.getElementById("lightbox-img").src = images[index];
+    }
+
+    function closeImage() {
+        document.getElementById("lightbox").style.display = "none";
+    }
+
+    function nextImage() {
+        currentIndex = (currentIndex + 1) % images.length;
+        document.getElementById("lightbox-img").src = images[currentIndex];
+    }
+
+    function prevImage() {
+        currentIndex = (currentIndex - 1 + images.length) % images.length;
+        document.getElementById("lightbox-img").src = images[currentIndex];
+    }
+</script>
+
+</body>
+</html>
